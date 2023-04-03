@@ -43,6 +43,8 @@
     ]
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.5.1",
+    "@commitlint/config-conventional": "^17.4.4",
     "@craco/craco": "^7.0.0-alpha.9",
     "eslint-config-prettier": "^8.8.0",
     "husky": "^8.0.3",
