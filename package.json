@@ -10,6 +10,7 @@
     "@types/node": "^16.18.23",
     "@types/react": "^18.0.32",
     "@types/react-dom": "^18.0.11",
+    "qs": "^6.11.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -21,6 +22,7 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "craco  eject",
+    "json-server": "json-server __json_server_mock__/db.json --watch --port 3001 --middlewares ./__json_server_mock__/middleware.js",
     "prepare": "husky install"
   },
   "eslintConfig": {
@@ -46,12 +48,20 @@
     "@commitlint/cli": "^17.5.1",
     "@commitlint/config-conventional": "^17.4.4",
     "@craco/craco": "^7.0.0-alpha.9",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint-config-prettier": "^8.8.0",
     "husky": "^8.0.3",
+    "jira-dev-tool": "^1.7.61",
+    "json-server": "^0.17.3",
     "lint-staged": "^13.2.0",
     "prettier": "2.8.7"
   },
   "lint-staged": {
     "*.{js,css,md,ts,tsx}": "prettier --write"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
