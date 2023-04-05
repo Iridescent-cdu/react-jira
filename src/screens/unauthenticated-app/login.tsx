@@ -1,22 +1,12 @@
-import React, { FormEvent } from 'react'
+import React from 'react'
+import type { FormEvent } from 'react'
+import { useAuth } from '@/context/auth-context'
 
-type Props = {}
+interface Props {}
 
-const apiUrl = process.env.REACT_APP_API_URL
+function Index(props: Props) {
+  const { login, user } = useAuth()
 
-const index = (props: Props) => {
-  const login = (param: { username: string; password: string }) => {
-    fetch(`${apiUrl}/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(param),
-    }).then(async (res) => {
-      if (res.ok) {
-      }
-    })
-  }
   // HTMLFormElement extends Element
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -30,6 +20,13 @@ const index = (props: Props) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
+        {user ? (
+          <div>
+            {' '}
+            登录成功，用户名:{user?.name}
+            {user?.token}
+          </div>
+        ) : null}
         <div>
           <label htmlFor="username">用户名</label>
           <input
@@ -50,4 +47,4 @@ const index = (props: Props) => {
   )
 }
 
-export default index
+export default Index

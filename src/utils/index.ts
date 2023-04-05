@@ -1,29 +1,33 @@
 import { useEffect, useState } from 'react'
 
-export const isFalsy = (value: unknown) => (value === 0 ? false : !value)
+export function isFalsy(value: unknown) {
+  return value === 0 ? false : !value
+}
 
-export const cleanObject = (object: object) => {
+export function cleanObject(object: object) {
   const result = { ...object }
 
   Object.keys(result).forEach((key) => {
-    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     const value = result[key]
     // 0
     if (isFalsy(value)) {
-      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       delete result[key]
     }
   })
   return result
 }
 
-export const useMount = (callback: () => void) => {
+export function useMount(callback: () => void) {
   useEffect(() => {
     callback()
   }, [])
 }
 
-export const useDebounce = <V>(value: V, delay?: number): V => {
+export function useDebounce<V>(value: V, delay?: number): V {
   // 1.创建一个debouncedValue
   const [debouncedValue, setDebounceValue] = useState(value)
   // 2. 监听原始value的变化，延迟设置debouncedValue的值
@@ -39,7 +43,7 @@ export const useDebounce = <V>(value: V, delay?: number): V => {
   return debouncedValue
 }
 
-export const useArray = <T>(initialArray: T[]) => {
+export function useArray<T>(initialArray: T[]) {
   const [value, setValue] = useState(initialArray)
   return {
     value,

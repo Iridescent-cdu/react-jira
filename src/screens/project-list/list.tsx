@@ -1,5 +1,5 @@
 import React from 'react'
-import { User } from './search-pannel'
+import type { User } from './search-panel'
 
 interface Project {
   id: string
@@ -9,12 +9,12 @@ interface Project {
   organization: string
 }
 
-type Props = {
+interface Props {
   list: Project[]
   users: User[]
 }
 
-const List = (props: Props) => {
+function List(props: Props) {
   const { list, users } = props
   return (
     <div>

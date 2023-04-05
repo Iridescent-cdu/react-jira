@@ -6,9 +6,10 @@ export interface User {
   email: string
   title: string
   organization: string
+  token: string
 }
 
-type Props = {
+interface Props {
   users: User[]
   param: {
     name: string
@@ -17,7 +18,7 @@ type Props = {
   setParam: (param: Props['param']) => void
 }
 
-const SearchPannel = (props: Props) => {
+function SearchPanel(props: Props) {
   const { param, setParam, users } = props
   return (
     <div>
@@ -54,4 +55,4 @@ const SearchPannel = (props: Props) => {
   )
 }
 
-export default SearchPannel
+export default SearchPanel

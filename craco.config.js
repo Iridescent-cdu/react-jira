@@ -1,6 +1,8 @@
-const path = require('path')
+const path = require('node:path')
 
-const resolve = (dir) => path.resolve(__dirname, dir)
+function resolve(dir) {
+  return path.resolve(__dirname, dir)
+}
 
 module.exports = {
   webpack: {
