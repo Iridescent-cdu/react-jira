@@ -1,5 +1,5 @@
 import React from 'react'
-
+import '@/App.css'
 import UnAuthenticated from './screens/unauthenticated-app/index'
 import { useAuth } from './context/auth-context'
 import AuthenticatedApp from './screens/authenticated-app/authenticated-app'

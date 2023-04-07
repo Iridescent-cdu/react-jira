@@ -5,6 +5,7 @@ import { loadDevTools } from 'jira-dev-tool'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { AppProviders } from './context'
+import 'antd/dist/antd.less'
 
 loadDevTools(() => {
   const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
