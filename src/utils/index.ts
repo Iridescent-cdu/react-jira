@@ -4,19 +4,17 @@ export function isFalsy(value: unknown) {
   return value === 0 ? false : !value
 }
 
-export function cleanObject(object: object) {
-  const result = { ...object }
+export function isVoid(value: unknown) {
+  return value === undefined || value === null || value === ''
+}
 
+export function cleanObject(object: { [key: string]: unknown }) {
+  const result = { ...object }
   Object.keys(result).forEach((key) => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
     const value = result[key]
     // 0
-    if (isFalsy(value)) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
+    if (isVoid(value))
       delete result[key]
-    }
   })
   return result
 }
@@ -24,6 +22,7 @@ export function cleanObject(object: object) {
 export function useMount(callback: () => void) {
   useEffect(() => {
     callback()
+    // 依赖项里如果再加上callback会造成无限循环，这个和useCallback和useMemo有关系
   }, [])
 }
 

@@ -10,7 +10,6 @@ const Container = styled.div`
   grid-template-rows: 6rem 1fr;
   height: 100vh;
 `
-
 const Header = styled(Row)`
   padding: 3.2rem;
   box-shadow: 0 0 5px 0 rgba(0,0,0,.1);
@@ -30,6 +29,7 @@ function AuthenticatedApp() {
       <Header between={true}>
         <HeaderLeft gap={true}>
           {/* <img src={softwareLogo}/> */}
+          {/* 使用ReactComponent来渲染svg图标 */}
           <SoftwareLogo width={'18rem'} color={'rgb(38,132,255)'}></SoftwareLogo>
           <h2>项目</h2>
           <h2>用户</h2>
