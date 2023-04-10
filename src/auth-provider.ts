@@ -19,7 +19,8 @@ export function login(param: { username: string; password: string }) {
     },
     body: JSON.stringify(param),
   }).then(async (res) => {
-    if (res.ok) return handleUserResponse(await res.json())
+    if (res.ok)
+      return handleUserResponse(await res.json())
     else return Promise.reject(param)
   })
 }
@@ -31,7 +32,8 @@ export function register(param: { username: string; password: string }) {
     },
     body: JSON.stringify(param),
   }).then(async (res) => {
-    if (res.ok) return handleUserResponse(await res.json())
+    if (res.ok)
+      return handleUserResponse(await res.json())
     else return Promise.reject(param)
   })
 }

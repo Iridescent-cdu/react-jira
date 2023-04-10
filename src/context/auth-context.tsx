@@ -23,13 +23,13 @@ async function bootstrapUser() {
 // 创建一个AuthContext
 const AuthContext = React.createContext<
   | {
-      user: User | null
-      register: (form: AuthForm) => Promise<void>
-      login: (form: AuthForm) => Promise<void>
-      logout: () => Promise<void>
-    }
+    user: User | null
+    register: (form: AuthForm) => Promise<void>
+    login: (form: AuthForm) => Promise<void>
+    logout: () => Promise<void>
+  }
   | undefined
->(undefined)
+      >(undefined)
 
 // 指定Context名称
 AuthContext.displayName = 'AuthContext'
@@ -55,6 +55,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 // 封装useContext(AuthContext)
 export function useAuth() {
   const context = useContext(AuthContext)
-  if (!context) throw new Error('useAuth必须在AuthProvider中使用')
+  if (!context)
+    throw new Error('useAuth必须在AuthProvider中使用')
   return context
 }
