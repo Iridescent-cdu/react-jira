@@ -1,4 +1,7 @@
 import styled from '@emotion/styled'
+import { Spin, Typography } from 'antd'
+import { DevTools } from 'jira-dev-tool'
+import React from 'react'
 
 export const Row = styled.div<{
   gap?: number | boolean
@@ -15,3 +18,21 @@ export const Row = styled.div<{
     margin-right: ${props => typeof props.gap === 'number' ? `${props.gap}rem` : props.gap ? '2rem' : undefined};
   }
 `
+const FullPage = styled.div`
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+`
+export function FullPageLoading() {
+  return <FullPage>
+    <Spin size={'large'}></Spin>
+</FullPage>
+}
+export function FUllPageErrorFallback({ error }: { error: Error | null }) {
+  return <FullPage>
+    <DevTools></DevTools>
+    <Typography.Text type={'danger'} >{error?.message}</Typography.Text>
+  </FullPage>
+}
