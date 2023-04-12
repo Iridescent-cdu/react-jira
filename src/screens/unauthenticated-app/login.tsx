@@ -2,15 +2,25 @@ import React from 'react'
 import { Form, Input } from 'antd'
 import { LongButton } from '.'
 import { useAuth } from '@/context/auth-context'
+import { useAsync } from '@/utils/use-async'
 
-interface Props {}
+interface Props {
+  onError: (error: Error) => void
+}
 
-function Index(props: Props) {
+function Login(props: Props) {
   const { login, user } = useAuth()
+  const { onError } = props
+  const { run, isLoading } = useAsync()
 
   // HTMLFormElement extends Element
-  const handleSubmit = (values: { username: string; password: string }) => {
-    login(values)
+  const handleSubmit = async (values: { username: string; password: string }) => {
+    try {
+      await run(login(values))
+    }
+    catch (e) {
+      onError(e as Error)
+    }
   }
   return (
     <div>
@@ -45,4 +55,4 @@ function Index(props: Props) {
   )
 }
 
-export default Index
+export default Login

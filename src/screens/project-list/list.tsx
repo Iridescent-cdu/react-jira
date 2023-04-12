@@ -1,8 +1,9 @@
+import type { TableProps } from 'antd'
 import { Table } from 'antd'
 import dayjs from 'dayjs'
 import type { User } from './search-panel'
 
-interface Project {
+export interface Project {
   id: string
   name: string
   personId: string
@@ -11,15 +12,15 @@ interface Project {
   created: number
 }
 
-interface Props {
-  list: Project[]
+// 继承antd TableProps的类型，传入泛型Project
+interface Props extends TableProps<Project> {
   users: User[]
 }
 
-function List(props: Props) {
-  const { list, users } = props
+function List({ users, ...props }: Props) {
   return (
     <Table
+      rowKey={'id'}
       pagination={false}
       columns={[
         {
@@ -47,7 +48,7 @@ function List(props: Props) {
           },
         },
       ]}
-      dataSource={list}
+      {...props}
     />
   )
 }

@@ -21,7 +21,7 @@ export function login(param: { username: string; password: string }) {
   }).then(async (res) => {
     if (res.ok)
       return handleUserResponse(await res.json())
-    else return Promise.reject(param)
+    else return Promise.reject(await res.json())
   })
 }
 export function register(param: { username: string; password: string }) {
@@ -34,7 +34,7 @@ export function register(param: { username: string; password: string }) {
   }).then(async (res) => {
     if (res.ok)
       return handleUserResponse(await res.json())
-    else return Promise.reject(param)
+    else return Promise.reject(await res.json())
   })
 }
 export async function logout() {
