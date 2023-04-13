@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { Typography } from 'antd'
 import List from './list'
 import SearchPanel from './search-panel'
-import { useDebounce } from '@/utils/index'
+import { useDebounce, useDocumentTitle } from '@/utils/index'
 import { useProjects } from '@/utils/project'
 import { useUsers } from '@/utils/user'
 
@@ -32,9 +32,12 @@ function ProjectListScreen() {
   //   .finally(() => setIsLoading(false))
   // run(client('projects', { data: cleanObject(debouncedParam) }))
   // }, [debouncedParam])
-
+  useDocumentTitle('项目列表')
   return (
     <Container>
+     {/* <Helmet>
+       <title>项目列表</title>
+    </Helmet> */}
       <h2>项目列表</h2>
       <SearchPanel
         users={users || []}
