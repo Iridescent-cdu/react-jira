@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export function isFalsy(value: unknown) {
   return value === 0 ? false : !value
@@ -57,14 +57,15 @@ export function useArray<T>(initialArray: T[]) {
   }
 }
 export function useDocumentTitle(title: string, keepOnUnmount = true) {
-  const oldTitle = document.title
+  const oldTitle = useRef(document.title).current
   useEffect(() => {
     document.title = title
   }, [title])
   useEffect(() => {
     return () => {
       if (!keepOnUnmount)
+      // 如果不指定依赖，利用闭包读到的就是旧title
         document.title = oldTitle
     }
-  }, [])
+  }, [keepOnUnmount, oldTitle])
 }
