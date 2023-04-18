@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from '@emotion/styled'
 import { Typography } from 'antd'
 import List from './list'
@@ -6,38 +6,20 @@ import SearchPanel from './search-panel'
 import { useDebounce, useDocumentTitle } from '@/utils/index'
 import { useProjects } from '@/utils/project'
 import { useUsers } from '@/utils/user'
+import { useUrlQueryParam } from '@/utils/url'
 
 const Container = styled.div`
   padding: 3.2rem;
 `
 function ProjectListScreen() {
-  // const [users, setUsers] = useState([])
-  // const [list, setList] = useState([])
-  const [param, setParam] = useState({
-    name: '',
-    personId: '',
-  })
+  // 基本类型，可以放到依赖里，组件状态，可以放到依赖里，非组件状态的对象，绝不可以放到依赖里
+  const [param, setParam] = useUrlQueryParam(['name', 'personId'])
   const debouncedParam = useDebounce(param, 2000)
-  // const client = useHttp()
-  // const [isLoading, setIsLoading] = useState(false)
-  // const [error, setError] = useState<null | Error>(null)
   const { isLoading, error, data: list } = useProjects(debouncedParam)
   const { data: users } = useUsers()
-
-  // useEffect(() => {
-  // setIsLoading(true)
-  // client('projects', { data: cleanObject(debouncedParam) })
-  //   .then(setList)
-  //   .catch(error => setError(error))
-  //   .finally(() => setIsLoading(false))
-  // run(client('projects', { data: cleanObject(debouncedParam) }))
-  // }, [debouncedParam])
   useDocumentTitle('项目列表')
   return (
     <Container>
-     {/* <Helmet>
-       <title>项目列表</title>
-    </Helmet> */}
       <h2>项目列表</h2>
       <SearchPanel
         users={users || []}
@@ -53,5 +35,6 @@ function ProjectListScreen() {
     </Container >
   )
 }
+ProjectListScreen.whyDidYouRender = true
 
 export default ProjectListScreen

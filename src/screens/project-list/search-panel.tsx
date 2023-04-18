@@ -52,7 +52,7 @@ function SearchPanel(props: Props) {
             {users.map(user => (
               <Select.Option
                 key={user.id}
-                value={user.id}>
+                value={String(user.id)}>
                 {user.name}
               </Select.Option>
             ))}

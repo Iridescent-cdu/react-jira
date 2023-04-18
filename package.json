@@ -38,6 +38,7 @@
     "@commitlint/config-conventional": "^17.4.4",
     "@craco/craco": "^7.0.0-alpha.9",
     "@types/react-helmet": "^6.1.6",
+    "@welldone-software/why-did-you-render": "^7.0.1",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.37.0",
     "eslint-config-prettier": "^8.8.0",

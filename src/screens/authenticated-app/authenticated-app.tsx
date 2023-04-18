@@ -1,11 +1,12 @@
 import styled from '@emotion/styled'
-import { Dropdown, Menu } from 'antd'
+import { Button, Dropdown, Menu } from 'antd'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import ProjectScreen from '../project'
 import ProjectListScreen from '@/screens/project-list/index'
 import { useAuth } from '@/context/auth-context'
 import { Row } from '@/components/lib'
 import { ReactComponent as SoftwareLogo } from '@/assets/software-logo.svg'
+import { resetRoute } from '@/utils'
 
 const Container = styled.div`
   display: grid;
@@ -29,7 +30,9 @@ function PageHeader() {
     <HeaderLeft gap={true}>
       {/* <img src={softwareLogo}/> */}
       {/* 使用ReactComponent来渲染svg图标 */}
-      <SoftwareLogo width={'18rem'} color={'rgb(38,132,255)'}></SoftwareLogo>
+     <Button type={'link'} onClick={resetRoute}>
+       <SoftwareLogo width={'18rem'} color={'rgb(38,132,255)'}></SoftwareLogo>
+       </Button>
       <h2>项目</h2>
       <h2>用户</h2>
     </HeaderLeft>
