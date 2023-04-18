@@ -22,8 +22,9 @@ function toNumber(value: unknown) {
 function IdSelect(props: Props) {
   const { value, onChange, defaultOptionName, options, ...restProps } = props
   return (
+    // Select 组件显示的默认值value通过id与Select.Option组件联动
     <Select
-     value={toNumber(value)}
+     value={options?.length ? toNumber(value) : 0}
      onChange={value => onChange(toNumber(value) || undefined)}
      {...restProps}
      >
