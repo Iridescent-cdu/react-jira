@@ -26,10 +26,15 @@ export function useAsync<D>(initialState?: State<D>) {
     stat: 'error',
     data: null,
   })
-  const run = (promise: Promise<D>) => {
+  const [retry, setRetry] = useState(() => () => {})
+
+  const run = (promise: Promise<D>, runConfig?: { retry: () => Promise<D> }) => {
     if (!promise || !promise.then)
       throw new Error('请传入Promise类型数据')
-
+    setRetry(() => () => {
+      if (runConfig?.retry)
+        run(runConfig?.retry(), runConfig)
+    })
     setState({ ...state, stat: 'loading' })
     return promise.then((data) => {
       setData(data)
@@ -40,6 +45,7 @@ export function useAsync<D>(initialState?: State<D>) {
       return Promise.reject(error)
     })
   }
+
   return {
     isIdle: state.stat === 'idle',
     isLoading: state.stat === 'loading',
@@ -48,6 +54,8 @@ export function useAsync<D>(initialState?: State<D>) {
     run,
     setData,
     setError,
+    // retry被调用时重新调用run，让state刷新一遍
+    retry,
     ...state,
   }
 }

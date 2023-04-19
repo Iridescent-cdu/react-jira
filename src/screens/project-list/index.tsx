@@ -15,7 +15,7 @@ const Container = styled.div`
 function ProjectListScreen() {
   const [param, setParam] = useProjectsSearchParams()
 
-  const { isLoading, error, data: list } = useProjects(useDebounce(param, 2000))
+  const { isLoading, error, retry, data: list } = useProjects(useDebounce(param, 2000))
   const { data: users } = useUsers()
   useDocumentTitle('项目列表')
   return (
@@ -29,6 +29,7 @@ function ProjectListScreen() {
       {error ? <Typography.Text type={'danger'}>{error.message}</Typography.Text> : ''}
       {/* 传入loading状态和dataSource数据源 */}
       <List
+      refresh={retry}
         loading={isLoading}
         dataSource={list || []}
         users={users || []}></List>

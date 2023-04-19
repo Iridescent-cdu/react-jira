@@ -29,7 +29,7 @@ function IdSelect(props: Props) {
      {...restProps}
      >
     {
-        defaultOptionName ? <Select.Option value={0}>{defaultOptionName}</Select.Option> : null
+      defaultOptionName ? <Select.Option value={0}>{defaultOptionName}</Select.Option> : null
     }
     {
       options?.map((option) => {
