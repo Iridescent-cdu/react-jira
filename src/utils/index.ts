@@ -73,3 +73,19 @@ export function useDocumentTitle(title: string, keepOnUnmount = true) {
 export function resetRoute() {
   window.location.href = window.location.origin
 }
+
+/**
+ * 返回组件的挂载状态，如果还没挂载或者已经卸载，返回false，反之，返回true
+ */
+export function useMountedRef() {
+  const mountedRef = useRef(false)
+  useEffect(() => {
+    // 组件挂载完调用
+    mountedRef.current = true
+    // 组件卸载时调用
+    return () => {
+      mountedRef.current = false
+    }
+  })
+  return mountedRef
+}
