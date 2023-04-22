@@ -12,9 +12,15 @@ function ProjectScreen(props: Props) {
       <Link to={'kanban'}>看板</Link>
       <Link to={'epic'}>任务组</Link>
       <Routes>
-        <Route path={'/kanban'} element={<KanbanScreen/>}></Route>
-        <Route path={'/epic'} element={<EpicScreen/>}></Route>
-        <Route path={'*'} element={ <Navigate to={`${window.location.pathname}/kanban`}/>}></Route>
+        <Route
+          path={'/kanban'}
+          element={<KanbanScreen />}></Route>
+        <Route
+          path={'/epic'}
+          element={<EpicScreen />}></Route>
+        <Route
+          path={'*'}
+          element={<Navigate to={`${window.location.pathname}/kanban`} />}></Route>
       </Routes>
     </div>
   )

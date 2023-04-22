@@ -28,11 +28,13 @@ function SearchPanel(props: Props) {
   return (
     <div>
       {/* 使用Emotion提供的css功能 */}
-      <Form css={{ marginBottom: '2rem' }} layout={'inline'}>
+      <Form
+        css={{ marginBottom: '2rem' }}
+        layout={'inline'}>
         <Form.Item>
           <Input
             type="text"
-            placeholder='项目名'
+            placeholder="项目名"
             value={param.name}
             onChange={(event) => {
               setParam({
@@ -44,8 +46,9 @@ function SearchPanel(props: Props) {
         </Form.Item>
         <Form.Item>
           <UserSelect
-           defaultOptionName={'负责人'}
-            value={param.personId} onChange={(value) => {
+            defaultOptionName={'负责人'}
+            value={param.personId}
+            onChange={(value) => {
               setParam({
                 ...param,
                 personId: value,

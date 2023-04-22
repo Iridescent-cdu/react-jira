@@ -24,19 +24,20 @@ function IdSelect(props: Props) {
   return (
     // Select 组件显示的默认值value通过id与Select.Option组件联动
     <Select
-     value={options?.length ? toNumber(value) : 0}
-     onChange={value => onChange(toNumber(value) || undefined)}
-     {...restProps}
-     >
-    {
-      defaultOptionName ? <Select.Option value={0}>{defaultOptionName}</Select.Option> : null
-    }
-    {
-      options?.map((option) => {
-        return (<Select.Option key={option.id} value={option.id}>{option.name}</Select.Option>)
-      })
-    }
-    </Select >
+      value={options?.length ? toNumber(value) : 0}
+      onChange={value => onChange(toNumber(value) || undefined)}
+      {...restProps}>
+      {defaultOptionName ? <Select.Option value={0}>{defaultOptionName}</Select.Option> : null}
+      {options?.map((option) => {
+        return (
+          <Select.Option
+            key={option.id}
+            value={option.id}>
+            {option.name}
+          </Select.Option>
+        )
+      })}
+    </Select>
   )
 }
 

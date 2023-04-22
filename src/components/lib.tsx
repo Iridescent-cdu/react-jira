@@ -10,12 +10,12 @@ export const Row = styled.div<{
 }>`
   display: flex;
   align-items: center;
-  justify-content: ${props => props.between ? 'space-between' : undefined};
-  margin-bottom:${props => `${props.marginBottom}rem`};
+  justify-content: ${props => (props.between ? 'space-between' : undefined)};
+  margin-bottom: ${props => `${props.marginBottom}rem`};
   > * {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
-    margin-right: ${props => typeof props.gap === 'number' ? `${props.gap}rem` : props.gap ? '2rem' : undefined};
+    margin-right: ${props => (typeof props.gap === 'number' ? `${props.gap}rem` : props.gap ? '2rem' : undefined)};
   }
 `
 const FullPage = styled.div`
@@ -26,15 +26,19 @@ const FullPage = styled.div`
   align-items: center;
 `
 export function FullPageLoading() {
-  return <FullPage>
-    <Spin size={'large'}></Spin>
-</FullPage>
+  return (
+    <FullPage>
+      <Spin size={'large'}></Spin>
+    </FullPage>
+  )
 }
 export function FUllPageErrorFallback({ error }: { error: Error | null }) {
-  return <FullPage>
-    <DevTools></DevTools>
-    <Typography.Text type={'danger'} >{error?.message}</Typography.Text>
-  </FullPage>
+  return (
+    <FullPage>
+      <DevTools></DevTools>
+      <Typography.Text type={'danger'}>{error?.message}</Typography.Text>
+    </FullPage>
+  )
 }
 export const ButtonNoPadding = styled(Button)`
   padding: 0;

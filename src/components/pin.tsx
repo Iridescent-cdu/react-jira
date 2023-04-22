@@ -9,10 +9,11 @@ interface Props extends React.ComponentProps<typeof Rate> {
 function Pin({ checked, onCheckedChange, ...restProps }: Props) {
   return (
     <Rate
-     count={1}
-     value={checked ? 1 : 0}
-     onChange={num => onCheckedChange?.(!!num)}
-     {...restProps}/>
+      count={1}
+      value={checked ? 1 : 0}
+      onChange={num => onCheckedChange?.(!!num)}
+      {...restProps}
+    />
   )
 }
 
