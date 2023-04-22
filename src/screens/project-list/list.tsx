@@ -6,6 +6,7 @@ import type { User } from './search-panel'
 import Pin from '@/components/pin'
 import { useEditProject } from '@/utils/project'
 import { ButtonNoPadding } from '@/components/lib'
+import { useProjectModal } from '@/utils/url'
 
 export interface Project {
   id: number
@@ -20,11 +21,12 @@ export interface Project {
 interface Props extends TableProps<Project> {
   users: User[]
   refresh: () => void
-  setProjectModalOpen: (isOpen: boolean) => void
+
 }
 
 function List({ users, refresh, ...props }: Props) {
   const { mutate } = useEditProject()
+  const { open } = useProjectModal()
   const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin }).then(() => {
     refresh()
   })
@@ -71,7 +73,7 @@ function List({ users, refresh, ...props }: Props) {
             return <Dropdown overlay={
               <Menu>
                 <Menu.Item key={'edit'}>
-                 <ButtonNoPadding type={'link'} onClick={() => props.setProjectModalOpen(true)}>编辑</ButtonNoPadding>
+                 <ButtonNoPadding type={'link'} onClick={open}>编辑</ButtonNoPadding>
                 </Menu.Item>
               </Menu>
             }>

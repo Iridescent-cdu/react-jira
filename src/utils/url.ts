@@ -26,10 +26,10 @@ export function useUrlQueryParam<K extends string>(keys: K[]) {
 export function useProjectModal() {
   const [{ projectCreate }, setProjectCreate] = useUrlQueryParam(['projectCreate'])
   const open = () => setProjectCreate({ projectCreate: true })
-  const close = () => setProjectCreate({ projectCreate: false })
-  return [
-    projectCreate === 'true',
+  const close = () => setProjectCreate({ projectCreate: undefined })
+  return {
+    projectModalOpen: projectCreate === 'true',
     open,
     close,
-  ] as const
+  }
 }

@@ -26,7 +26,7 @@ const HeaderRight = styled.div``
 
 const Main = styled.main`
 `
-function PageHeader(props: { setProjectModalOpen: (isOpen: boolean) => void }) {
+function PageHeader(props: {}) {
   return (<Header between={true}>
     <HeaderLeft gap={true}>
       {/* <img src={softwareLogo}/> */}
@@ -34,8 +34,7 @@ function PageHeader(props: { setProjectModalOpen: (isOpen: boolean) => void }) {
      <ButtonNoPadding type={'link'} onClick={resetRoute}>
        <SoftwareLogo width={'18rem'} color={'rgb(38,132,255)'}></SoftwareLogo>
        </ButtonNoPadding>
-       <ProjectPopover setProjectModalOpen={props.setProjectModalOpen}/>
-
+       <ProjectPopover />
       <span>用户</span>
     </HeaderLeft>
     <HeaderRight>
@@ -62,16 +61,16 @@ function AuthenticatedApp() {
   const [projectModalOpen, setProjectModalOpen] = useState(false)
   return (
     <Container>
-    <PageHeader setProjectModalOpen={setProjectModalOpen}/>
-      <Main>
        <BrowserRouter >
+    <PageHeader />
+      <Main>
        <Routes>
-          <Route path={'/projects'} element={<ProjectListScreen setProjectModalOpen={setProjectModalOpen}/>} ></Route>
+          <Route path={'/projects'} element={<ProjectListScreen />} ></Route>
           <Route path={'/projects/:projectId/*'} element={<ProjectScreen/>}></Route>
         </Routes>
-       </BrowserRouter>
       </Main>
-      <ProjectModal projectModalOpen={projectModalOpen} onClose={() => setProjectModalOpen(false)}/>
+      <ProjectModal />
+      </BrowserRouter>
     </Container>
   )
 }
