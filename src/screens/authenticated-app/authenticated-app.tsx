@@ -63,7 +63,6 @@ function AuthenticatedApp() {
   return (
     <Container>
     <PageHeader setProjectModalOpen={setProjectModalOpen}/>
-
       <Main>
        <BrowserRouter >
        <Routes>

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useReducer, useState } from 'react'
 import { useMountedRef } from '.'
 
 interface State<D> {
@@ -12,23 +12,32 @@ const defaultInitialState: State<null> = {
   error: null,
 }
 
+function useSafeDispatch<T>(dispatch: (...args: T[]) => void) {
+  const mountedRef = useMountedRef()
+  // eslint-disable-next-line no-void
+  return useCallback((...args: T[]) => (mountedRef.current ? dispatch(...args) : void 0), [dispatch, mountedRef])
+}
+
 export function useAsync<D>(initialState?: State<D>) {
-  const [state, setState] = useState<State<D>>({
+  const [state, dispatch] = useReducer((state: State<D>, action: Partial<State<D>>) => ({
+    ...state,
+    ...action,
+  }), {
     ...defaultInitialState,
     ...initialState,
   })
-  const setData = useCallback((data: D) => setState({
+  const safeDispatch = useSafeDispatch(dispatch)
+  const [retry, setRetry] = useState(() => () => {})
+  const setData = useCallback((data: D) => safeDispatch({
     data,
     stat: 'success',
     error: null,
   }), [])
-  const setError = useCallback((error: Error) => setState({
+  const setError = useCallback((error: Error) => safeDispatch({
     error,
     stat: 'error',
     data: null,
   }), [])
-  const mountedRef = useMountedRef()
-  const [retry, setRetry] = useState(() => () => {})
 
   const run = useCallback((promise: Promise<D>, runConfig?: { retry: () => Promise<D> }) => {
     if (!promise || !promise.then)
@@ -37,18 +46,18 @@ export function useAsync<D>(initialState?: State<D>) {
       if (runConfig?.retry)
         run(runConfig?.retry(), runConfig)
     })
-    setState(prevState => ({ ...prevState, stat: 'loading' }))
+    safeDispatch({
+      stat: 'loading',
+    })
     return promise.then((data) => {
-      // 判断mountedRef，确定组件是否被卸载
-      if (mountedRef.current)
-        setData(data)
+      setData(data)
       return data
     }).catch((error) => {
       // catch会捕获异常，如果不主动抛出，外面是接收不到异常的
       setError(error)
       return Promise.reject(error)
     })
-  }, [setData, setError, mountedRef])
+  }, [setData, setError, safeDispatch])
 
   return {
     isIdle: state.stat === 'idle',
