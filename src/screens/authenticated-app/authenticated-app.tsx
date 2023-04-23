@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 import { Dropdown, Menu } from 'antd'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { useState } from 'react'
 import ProjectScreen from '../project'
 import ProjectModal from '../project-list/project-modal'
 import ProjectListScreen from '@/screens/project-list/index'
@@ -58,7 +57,6 @@ function User() {
 }
 
 function AuthenticatedApp() {
-  const [projectModalOpen, setProjectModalOpen] = useState(false)
   return (
     <Container>
        <BrowserRouter >

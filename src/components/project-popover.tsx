@@ -3,7 +3,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { ButtonNoPadding } from './lib'
 import { useProjects } from '@/utils/project'
-import { useProjectModal } from '@/utils/url'
+import { useProjectModal } from '@/screens/project-list/util'
 
 const ContentContainer = styled.div`
   min-width: 30rem;
@@ -19,7 +19,7 @@ function ProjectPopover(props: Props) {
      </Typography.Text>
      <List>
         {
-          pinnedProjects?.map(project => <List.Item>
+          pinnedProjects?.map(project => <List.Item key={project.id}>
             <List.Item.Meta title={project.name}/>
           </List.Item>)
         }

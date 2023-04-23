@@ -1,47 +1,47 @@
-import { useCallback, useEffect } from 'react'
-import { useAsync } from './use-async'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { useHttp } from './http'
-import { cleanObject } from '.'
 import type { Project } from '@/screens/project-list/list'
 
 export function useProjects(param?: Partial<Project>) {
   const client = useHttp()
-  const { run, ...result } = useAsync<Project[]>()
-  const fetchProjects = useCallback(() => client('projects', { data: cleanObject(param || {}) }), [param, client])
-  useEffect(() => {
-    // 这里传入的promise是请求完之后的promise，如果需要重发retry请求，需要传一个派发请求的函数
-    run(fetchProjects(), {
-      retry: fetchProjects,
-    })
-  }, [param])
-  return result
+  // 第一个参数可以为一个数组，当数组中元素发生变化时，会重新执行函数获取新数据
+  return useQuery<Project[]>(['projects', param], () => client('projects', {
+    data: param,
+  }))
 }
 
 export function useEditProject() {
-  const { run, ...asyncResult } = useAsync()
+  // useHttp()必须先在useQueryClient()之前调用
   const client = useHttp()
-  const mutate = (params: Partial<Project>) => {
-    return run(client(`projects/${params.id}`, {
-      data: params,
-      method: 'PATCH',
-    }))
-  }
-  return {
-    mutate,
-    ...asyncResult,
-  }
+  const queryClient = useQueryClient()
+  return useMutation(
+    (params: Partial<Project>) =>
+      client(`projects/${params.id}`, {
+        method: 'PATCH',
+        data: params,
+      }),
+    {
+      onSuccess: () => queryClient.invalidateQueries('projects'),
+    },
+  )
 }
+
 export function useAddProject() {
-  const { run, ...asyncResult } = useAsync()
   const client = useHttp()
-  const mutate = (params: Partial<Project>) => {
-    return run(client(`projects/${params.id}`, {
-      data: params,
-      method: 'POST',
-    }))
-  }
-  return {
-    mutate,
-    ...asyncResult,
-  }
+  const queryClient = useQueryClient()
+  return useMutation((params: Partial<Project>) => client('projects', {
+    data: params,
+    method: 'POST',
+  }), {
+    onSuccess: () => queryClient.invalidateQueries('projects'),
+  })
+}
+
+export function useProject(id?: number) {
+  const client = useHttp()
+  return useQuery<Project>(
+    ['project', { id }],
+    () => client(`projects/${id}`), {
+      enabled: Boolean(id),
+    })
 }

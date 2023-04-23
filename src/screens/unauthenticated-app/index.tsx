@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button, Card, Typography } from 'antd'
+import { Button, Card } from 'antd'
 import styled from '@emotion/styled'
 import RegisterScreen from './register'
 import LoginScreen from './login'
@@ -7,6 +7,7 @@ import logo from '@/assets/logo.svg'
 import left from '@/assets/left.svg'
 import right from '@/assets/right.svg'
 import { useDocumentTitle } from '@/utils'
+import { ErrorBox } from '@/components/lib'
 
 const Container = styled.div`
   display: flex;
@@ -61,7 +62,7 @@ function UnauthenticatedApp() {
       <Background />
       <ShadowCard>
         <Title>{isRegister ? '请注册' : '请登录'}</Title>
-        {error ? <Typography.Text type={'danger'}>{error.message}</Typography.Text> : ''}
+        <ErrorBox error={error}/>
         {isRegister ? <RegisterScreen onError={setError} /> : <LoginScreen onError={setError} />}
         <Button onClick={() => setIsRegister(!isRegister)}>
           {isRegister ? '已经有账号了？直接登录' : '没有账号？注册新账号'}

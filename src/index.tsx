@@ -11,12 +11,12 @@ import 'antd/dist/antd.less'
 loadServer(() => {
   const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
   root.render(
-    <React.StrictMode>
+    // <React.StrictMode>
       <AppProviders>
         <DevTools></DevTools>
         <App />
-      </AppProviders>
-    </React.StrictMode>,
+      </AppProviders>,
+    // </React.StrictMode>,
   )
 })
 

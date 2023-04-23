@@ -5,8 +5,8 @@ import type { Raw } from '@/types'
 type SelectProps = React.ComponentProps<typeof Select>
 
 interface Props extends Omit<SelectProps, 'value' | 'onChange' | 'options'> {
-  value: Raw | null | undefined
-  onChange: (value?: number) => void
+  value?: Raw | null | undefined
+  onChange?: (value?: number) => void
   defaultOptionName?: string
   options?: { name: string; id: number }[]
 }
@@ -25,7 +25,7 @@ function IdSelect(props: Props) {
     // Select 组件显示的默认值value通过id与Select.Option组件联动
     <Select
      value={options?.length ? toNumber(value) : 0}
-     onChange={value => onChange(toNumber(value) || undefined)}
+     onChange={value => onChange?.(toNumber(value) || undefined)}
      {...restProps}
      >
     {

@@ -3,10 +3,10 @@ import { Dropdown, Menu, Table } from 'antd'
 import dayjs from 'dayjs'
 import { Link } from 'react-router-dom'
 import type { User } from './search-panel'
+import { useProjectModal } from './util'
 import Pin from '@/components/pin'
 import { useEditProject } from '@/utils/project'
 import { ButtonNoPadding } from '@/components/lib'
-import { useProjectModal } from '@/utils/url'
 
 export interface Project {
   id: number
@@ -20,16 +20,13 @@ export interface Project {
 // 继承antd TableProps的类型，传入泛型Project
 interface Props extends TableProps<Project> {
   users: User[]
-  refresh: () => void
-
 }
 
-function List({ users, refresh, ...props }: Props) {
+function List({ users, ...props }: Props) {
   const { mutate } = useEditProject()
-  const { open } = useProjectModal()
-  const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin }).then(() => {
-    refresh()
-  })
+  const { startEdit } = useProjectModal()
+  const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin })
+  const editProject = (id: number) => () => startEdit(id)
   return (
     <Table
       rowKey={'id'}
@@ -72,9 +69,12 @@ function List({ users, refresh, ...props }: Props) {
           render(value, project) {
             return <Dropdown overlay={
               <Menu>
-                <Menu.Item key={'edit'}>
-                 <ButtonNoPadding type={'link'} onClick={open}>编辑</ButtonNoPadding>
-                </Menu.Item>
+                <Menu>
+                    <Menu.Item onClick={editProject(project.id)} key={'edit'}>
+                      编辑
+                    </Menu.Item>
+                    <Menu.Item key={'delete'}>删除</Menu.Item>
+                  </Menu>
               </Menu>
             }>
               <ButtonNoPadding type={'link'}>...</ButtonNoPadding>

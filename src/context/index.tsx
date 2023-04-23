@@ -1,10 +1,13 @@
 import type { ReactNode } from 'react'
+import React from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { AuthProvider } from './auth-context'
-// 统一提供Provider
+
 export function AppProviders({ children }: { children: ReactNode }) {
+  const queryClient = new QueryClient()
+
   return (
-    <QueryClientProvider client={new QueryClient()}>
+    <QueryClientProvider client={queryClient}>
       <AuthProvider>{children}</AuthProvider>
     </QueryClientProvider>
   )
