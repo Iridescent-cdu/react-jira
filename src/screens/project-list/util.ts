@@ -1,6 +1,5 @@
 import { useMemo } from 'react'
-import { useSearchParams } from 'react-router-dom'
-import { useUrlQueryParam } from '@/utils/url'
+import { useSetUrlSearchParam, useUrlQueryParam } from '@/utils/url'
 import { useProject } from '@/utils/project'
 // 项目列表搜索的参数
 export function useProjectsSearchParams() {
@@ -10,6 +9,10 @@ export function useProjectsSearchParams() {
     setParam,
   ] as const
 }
+export function useProjectsQueryKey() {
+  const [params] = useProjectsSearchParams()
+  return ['projects', params]
+}
 export function useProjectModal() {
   const [{ projectCreate }, setProjectCreate] = useUrlQueryParam([
     'projectCreate',
@@ -17,7 +20,7 @@ export function useProjectModal() {
   const [{ editingProjectId }, setEditingProjectId] = useUrlQueryParam([
     'editingProjectId',
   ])
-  const [_, setUrlParams] = useSearchParams()
+  const setUrlParams = useSetUrlSearchParam()
   const { data: editingProject, isLoading } = useProject(
     Number(editingProjectId),
   )

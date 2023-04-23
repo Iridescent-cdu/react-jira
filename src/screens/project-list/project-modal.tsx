@@ -2,7 +2,7 @@ import { Button, Drawer, Form, Input, Spin } from 'antd'
 import React, { useEffect } from 'react'
 import { useForm } from 'antd/lib/form/Form'
 import styled from '@emotion/styled'
-import { useProjectModal } from './util'
+import { useProjectModal, useProjectsQueryKey } from './util'
 import UserSelect from '@/components/user-select'
 import { useAddProject, useEditProject } from '@/utils/project'
 import { ErrorBox } from '@/components/lib'
@@ -25,7 +25,7 @@ function ProjectModal(props: Props) {
   } = useProjectModal()
   const useMutateProject = editingProject ? useEditProject : useAddProject
 
-  const { mutateAsync, error, isLoading: mutateLoading } = useMutateProject()
+  const { mutateAsync, error, isLoading: mutateLoading } = useMutateProject(useProjectsQueryKey())
   const [form] = useForm()
   const onFinish = (values: any) => {
     mutateAsync({ ...editingProject, ...values }).then(() => {
