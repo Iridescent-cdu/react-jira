@@ -27,20 +27,22 @@ function ProjectModal(props: Props) {
 
   const { mutateAsync, error, isLoading: mutateLoading } = useMutateProject(useProjectsQueryKey())
   const [form] = useForm()
+  const closeModal = () => {
+    form.resetFields()
+    close()
+  }
   const onFinish = (values: any) => {
     mutateAsync({ ...editingProject, ...values }).then(() => {
-      form.resetFields()
-      close()
+      closeModal()
     })
   }
-
   const title = editingProject ? '编辑项目' : '创建项目'
 
   useEffect(() => {
     form.setFieldsValue(editingProject)
   }, [editingProject, form])
   return (
-    <Drawer forceRender={true} onClose={close} visible={projectModalOpen} width={'100%'}>
+    <Drawer forceRender={true} onClose={closeModal} visible={projectModalOpen} width={'100%'}>
     <Container>{
         isLoading
           ? <Spin size={'large'}/>

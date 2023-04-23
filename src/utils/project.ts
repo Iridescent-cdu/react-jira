@@ -13,7 +13,6 @@ export function useProjects(param?: Partial<Project>) {
 }
 
 export function useEditProject(queryKey: QueryKey) {
-  // useHttp()必须先在useQueryClient()之前调用
   const client = useHttp()
   return useMutation(
     (params: Partial<Project>) =>
@@ -24,7 +23,6 @@ export function useEditProject(queryKey: QueryKey) {
     useEditConfig(queryKey),
   )
 }
-
 export function useAddProject(queryKey: QueryKey) {
   const client = useHttp()
 
