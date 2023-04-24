@@ -1,17 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react'
 import { Form, Input } from 'antd'
-import type { Project } from './list'
+import type { Project } from '@/types/project'
 import UserSelect from '@/components/user-select'
-
-export interface User {
-  id: number
-  name: string
-  email: string
-  title: string
-  organization: string
-  token: string
-}
+import type { User } from '@/types/user'
 
 interface Props {
   users: User[]

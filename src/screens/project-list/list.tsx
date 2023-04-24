@@ -2,20 +2,12 @@ import type { TableProps } from 'antd'
 import { Dropdown, Menu, Modal, Table } from 'antd'
 import dayjs from 'dayjs'
 import { Link } from 'react-router-dom'
-import type { User } from './search-panel'
 import { useProjectModal, useProjectsQueryKey } from './util'
 import Pin from '@/components/pin'
 import { useDeleteProject, useEditProject } from '@/utils/project'
 import { ButtonNoPadding } from '@/components/lib'
-
-export interface Project {
-  id: number
-  name: string
-  personId: number
-  pin: boolean
-  organization: string
-  created: number
-}
+import type { Project } from '@/types/project'
+import type { User } from '@/types/user'
 
 // 继承antd TableProps的类型，传入泛型Project
 interface Props extends TableProps<Project> {

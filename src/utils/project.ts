@@ -2,7 +2,8 @@ import type { QueryKey } from 'react-query'
 import { useMutation, useQuery } from 'react-query'
 import { useHttp } from './http'
 import { useAddConfig, useDeleteConfig, useEditConfig } from './use-optimistic-options'
-import type { Project } from '@/screens/project-list/list'
+
+import type { Project } from '@/types/project'
 
 export function useProjects(param?: Partial<Project>) {
   const client = useHttp()
@@ -23,6 +24,7 @@ export function useEditProject(queryKey: QueryKey) {
     useEditConfig(queryKey),
   )
 }
+
 export function useAddProject(queryKey: QueryKey) {
   const client = useHttp()
 
@@ -32,6 +34,7 @@ export function useAddProject(queryKey: QueryKey) {
   }),
   useAddConfig(queryKey))
 }
+
 export function useDeleteProject(queryKey: QueryKey) {
   const client = useHttp()
   return useMutation((params: Partial<Project>) => client(`projects/${params.id}`, {
