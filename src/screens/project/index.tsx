@@ -2,8 +2,8 @@ import React from 'react'
 import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import styled from '@emotion/styled'
 import { Menu } from 'antd'
-import KanbanScreen from '../kanban'
-import EpicScreen from '../epic'
+import { KanbanScreen } from '../kanban'
+import { EpicScreen } from '../epic'
 
 const Aside = styled.aside`
   background-color: rgb(244,245,247);

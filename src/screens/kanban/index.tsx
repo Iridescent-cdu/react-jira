@@ -22,31 +22,29 @@ import { Drag, Drop, DropChild } from '@/components/drag-and-drop'
 
 export const ColumnsContainer = styled('div')`
   display: flex;
-  overflow-x: auto;
-  margin-right: 2rem;
+  overflow-x: scroll;
   flex: 1;
 `
-
-interface Props {}
-
-function KanbanScreen(props: Props) {
+export function KanbanScreen() {
   useDocumentTitle('看板列表')
+
   const { data: currentProject } = useProjectInUrl()
   const { data: kanbans, isLoading: kanbanIsLoading } = useKanbans(useKanbanSearchParams())
   const { isLoading: taskIsLoading } = useTasks(useTasksSearchParams())
   const isLoading = taskIsLoading || kanbanIsLoading
+
   const onDragEnd = useDragEnd()
   return (
-    // onDragEnd一般做持久化的操作
-    <DragDropContext onDragEnd={(...params) => onDragEnd(params[0])}>
+    <DragDropContext onDragEnd={onDragEnd}>
       <ScreenContainer>
         <h1>{currentProject?.name}看板</h1>
-        <SearchPanel></SearchPanel>
+        <SearchPanel />
         {isLoading
           ? (
           <Spin size={'large'} />
             )
           : (
+
           <ColumnsContainer>
             <Drop
               type={'COLUMN'}
@@ -59,14 +57,14 @@ function KanbanScreen(props: Props) {
                     draggableId={`kanban${kanban.id}`}
                     index={index}>
                     <KanbanColumn
-                      key={kanban.id}
                       kanban={kanban}
+                      key={kanban.id}
                     />
                   </Drag>
                 ))}
               </DropChild>
-              <CreateKanban />
             </Drop>
+            <CreateKanban />
           </ColumnsContainer>
             )}
         <TaskModal />
@@ -79,41 +77,38 @@ export function useDragEnd() {
   const { data: kanbans } = useKanbans(useKanbanSearchParams())
   const { mutate: reorderKanban } = useReorderKanban(useKanbansQueryKey())
   const { mutate: reorderTask } = useReorderTask(useTasksQueryKey())
-  const { data: allTasks } = useTasks(useTasksSearchParams())
+  const { data: allTasks = [] } = useTasks(useTasksSearchParams())
   return useCallback(
     ({ source, destination, type }: DropResult) => {
       if (!destination)
         return
+
       // 看板排序
       if (type === 'COLUMN') {
         const fromId = kanbans?.[source.index].id
         const toId = kanbans?.[destination.index].id
         if (!fromId || !toId || fromId === toId)
           return
+
         const type = destination.index > source.index ? 'after' : 'before'
-        reorderKanban({
-          fromId,
-          referenceId: toId,
-          type,
-        })
+        reorderKanban({ fromId, referenceId: toId, type })
       }
       if (type === 'ROW') {
         const fromKanbanId = +source.droppableId
         const toKanbanId = +destination.droppableId
         if (fromKanbanId === toKanbanId)
           return
-        const fromTask = allTasks?.filter(task => task.kanbanId === fromKanbanId)[source.index]
-        const toTask = allTasks?.filter(task => task.kanbanId === toKanbanId)[destination.index]
+
+        const fromTask = allTasks.filter(task => task.kanbanId === fromKanbanId)[source.index]
+        const toTask = allTasks.filter(task => task.kanbanId === toKanbanId)[destination.index]
         if (fromTask?.id === toTask?.id)
           return
-        if (!fromTask?.id || !toTask?.id)
-          return
+
         reorderTask({
-          fromId: fromTask.id,
-          referenceId: toTask.id,
+          fromId: fromTask?.id,
+          referenceId: toTask?.id,
           fromKanbanId,
           toKanbanId,
-          // eslint-disable-next-line no-mixed-operators
           type: fromKanbanId === toKanbanId && destination.index > source.index ? 'after' : 'before',
         })
       }
@@ -121,5 +116,3 @@ export function useDragEnd() {
     [kanbans, reorderKanban, allTasks, reorderTask],
   )
 }
-
-export default KanbanScreen
