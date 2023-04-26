@@ -11,6 +11,7 @@ import { useUsers } from '@/utils/user'
 import { ErrorBox } from '@/components/lib'
 
 const Container = styled.div`
+  width: 100vw;
   padding: 3.2rem;
 `
 // 基本类型，可以放到依赖里，组件状态，可以放到依赖里，非组件状态的对象，绝不可以放到依赖里

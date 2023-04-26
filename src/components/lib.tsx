@@ -48,3 +48,11 @@ export function ErrorBox({ error }: { error: unknown }) {
     return <Typography.Text type={'danger'} >{error?.message}</Typography.Text>
   return null
 }
+
+export const ScreenContainer = styled.div`
+  max-width: 100%;
+  padding:3.2rem;
+  display: flex;
+  flex-direction: column;
+
+`
