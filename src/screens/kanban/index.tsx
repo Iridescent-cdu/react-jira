@@ -25,6 +25,7 @@ export const ColumnsContainer = styled('div')`
   overflow-x: scroll;
   flex: 1;
 `
+
 export function KanbanScreen() {
   useDocumentTitle('看板列表')
 
@@ -44,7 +45,6 @@ export function KanbanScreen() {
           <Spin size={'large'} />
             )
           : (
-
           <ColumnsContainer>
             <Drop
               type={'COLUMN'}
@@ -109,6 +109,7 @@ export function useDragEnd() {
           referenceId: toTask?.id,
           fromKanbanId,
           toKanbanId,
+          // eslint-disable-next-line no-mixed-operators
           type: fromKanbanId === toKanbanId && destination.index > source.index ? 'after' : 'before',
         })
       }
