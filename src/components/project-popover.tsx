@@ -10,7 +10,7 @@ const ContentContainer = styled.div`
 `
 interface Props { }
 function ProjectPopover(props: Props) {
-  const { data: projects, isLoading } = useProjects()
+  const { data: projects, refetch } = useProjects()
   const { open } = useProjectModal()
   const pinnedProjects = projects?.filter(project => project.pin)
   const content = <ContentContainer>
@@ -30,7 +30,7 @@ function ProjectPopover(props: Props) {
       </ButtonNoPadding>
   </ContentContainer>
   return (
-    <Popover placement={'bottom'} content={content}>
+    <Popover onVisibleChange={() => refetch()} placement={'bottom'} content={content}>
       <span>项目</span>
     </Popover>
   )
